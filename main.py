@@ -6,12 +6,17 @@ load_dotenv()
 intents = discord.Intents.all()
 intents.message_content = True
 bot = discord.Bot()
-token = os.getenv('TOKEN)
+token = os.getenv('TOKEN')
 
-@bot.event
-async def on_ready():
-        print(f'Bot has logged in: {bot.user}')
-        await bot.change_presence(status=discord.Status.online, activity=discord.Game("testing bot"))
+cogs_list = [
+    'eventListener',
+    'misc',
+    'utilities',
+    'moderation'
+]
+
+for cog in cogs_list:
+    bot.load_extension(f'cogs.{cog}')
 
 bot.run(token)
 
